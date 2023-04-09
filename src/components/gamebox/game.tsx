@@ -1,12 +1,19 @@
+import e from "express";
 import React from "react";
 import "./game.css";
 
 function Game() {
-  const [resetStatus, setresetStatus] = React.useState(false);
+  const [gameStatus, setgameStatus] = React.useState('visible');
 
-  let [winner,showwinner] = React.useState('');
+  let [winner,showwinner] = React.useState({
+    player:'',
+    color:'rgb(6, 158, 59)'
+  });
   const [current, setnext] = React.useState(false);
-  const [currentPlayer, setPayer] = React.useState("X");
+  const [currentPlayer, setPayer] = React.useState({
+    name:'X',
+    color:"rgb(6, 158, 59)"
+  });
 
   let [count, userCount] = React.useState(0);
   const [x, xstate]: any = React.useState([]);
@@ -35,8 +42,8 @@ function Game() {
   });
 
   function handlebox(e: any) {
-    if(!resetStatus){
-      if(winner===''){
+    
+      if(winner.player===''){
         if (!current) {
           let updated = { [e.target.id]: "X" };
           setBox((box) => ({
@@ -48,9 +55,14 @@ function Game() {
           let xArray = x.push(e.target.id);
           xstate((prev: any) => [...prev, xArray]);
           e.currentTarget.disabled = true;
-          e.currentTarget.style.color = "black";
-          setPayer("O");
-        } else {
+          e.currentTarget.querySelector('h2').style.color='rgb(6, 158, 59)'          
+          setPayer((prev)=>({
+            ...prev,
+            name:'O',
+            color:'rgb(248, 13, 111)'
+          }));
+        } 
+        else {
           let updated = { [e.target.id]: "O" };
           setBox((box) => ({
             ...box,
@@ -61,12 +73,15 @@ function Game() {
           let yArray = y.push(e.target.id);
           ystate((prev: any) => [...prev, yArray]);
           e.currentTarget.disabled = true;
-          e.currentTarget.style.color = "black";
-          setPayer("X");
+          e.currentTarget.querySelector('h2').style.color='rgb(248, 13, 111)'          
+          setPayer((prev)=>({
+            ...prev,
+            name:'  X',
+            color:'rgb(6, 158, 59)'
+          }));        
         }
       }
-    }
-    
+
   }
 
   function method() {
@@ -80,11 +95,29 @@ function Game() {
       if (a === "" || b === "" || c === "") {
         continue;
       } else if (a === b && b === c) {
-        showwinner(`${a} wins`)
-        return`${a} wins`;
-      }
-      else if(count===9 &&(( a !== b && b === c)||(a === b && b !== c))){
-        showwinner('Match Drawn');
+        if(a==='X'){
+          showwinner(({
+            player:`${a} Wins!!`,
+            color:'rgb(6, 158, 59)'
+          }))
+          setgameStatus('hidden')
+        }
+          else if(a==='O'){
+              showwinner(({
+                player:`${a} Wins!!`,
+                color:'rgb(248, 13, 111)'
+              }))
+              setgameStatus('hidden')
+
+          }
+          return`${a} wins`;
+        }
+      
+      else if(count===9 && !(a === b && b === c)){
+        showwinner(({
+          player:'Match Drawn',
+          color:'yellow'
+        }))        
         return`Match drawn`;
 
       }
@@ -95,14 +128,14 @@ function Game() {
     method();
    
   });
-  function reset(){
-    setresetStatus(true)
-  }
+  const reset=(e:any)=>{
+    window.location.reload()
+    }
   return (
     <div className="main-outer">
       <div className="content">
         <div className="dcc">
-          <h1>Player-{currentPlayer}'s play</h1>
+          <h1 className={`${gameStatus}`}>Player-<span style={{"color":`${currentPlayer.color}`}}>{currentPlayer.name}</span>'s play</h1>
         </div>
         <div className="outer">
           <div className="main">
@@ -112,23 +145,25 @@ function Game() {
               key={1}
               onClick={(e) => handlebox(e)}
             >
-              {box[1]}
+             <h2> {box[1]}</h2>
             </button>
             <button
               className="box"
               id="4"
               key={2}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[4]}
+             <h2>{box[4]}</h2>
             </button>
             <button
               className="box"
               id="7"
               key={3}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[7]}
+              <h2>{box[7]}</h2>
             </button>
           </div>
           <div className="main">
@@ -137,24 +172,27 @@ function Game() {
               id="2"
               key={3}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[2]}
+              <h2>{box[2]}</h2>
             </button>
             <button
               className="box"
               id="5"
               key={4}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[5]}
+              <h2>{box[5]}</h2>
             </button>
             <button
               className="box"
               id="8"
               key={5}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[8]}
+             <h2> {box[8]}</h2>
             </button>
           </div>
           <div className="main">
@@ -163,30 +201,34 @@ function Game() {
               id="3"
               key={6}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[3]}
+             <h2>{box[3]}</h2> 
             </button>
             <button
               className="box"
               id="6"
               key={7}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[6]}
+              <h2>{box[6]}</h2>
             </button>
             <button
               className="box"
               id="9"
               key={8}
               onClick={(e) => handlebox(e)}
+
             >
-              {box[9]}
+             <h2>{box[9]}</h2> 
             </button>
           </div>
         </div>
         <div className="winner dcc">
-          <h1>{winner}</h1>
-          <button id="reset" onClick={e=>reset()}>Reset</button>
+          <h1 style={{"color":`${winner.color}`}}>{winner.player}</h1>
+          <button id="reset" onClick={e=>reset(e)}><h2>Re-Match</h2>
+          </button>
         </div>
       </div>
     </div>
