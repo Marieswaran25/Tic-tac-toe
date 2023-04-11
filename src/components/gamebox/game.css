@@ -3,13 +3,16 @@ body {
 }
 
 .box {
-  border: 1px solid black;
   height: 100px;
   width: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: larger;
+  font-size: xx-large;
+  border-radius: 20px;
+  background-color: #2b2b2b;
+  box-shadow: 5px 5px 10px black;
+  border: none;
 }
 .outer {
   display: flex;
@@ -28,7 +31,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 30vh;
+  margin-top: 3vh;
 }
 #reset {
   width: 150px;
@@ -46,12 +49,13 @@ body {
   flex-direction: column;
   gap: 10px;
 }
-button.box {
-  border-radius: 20px;
-  background-color: #2b2b2b;
-  box-shadow: 5px 5px 10px black;
-  border: none;
+.main2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+
 
 .visible {
   visibility: visible;
@@ -64,12 +68,37 @@ button.box {
   justify-content: space-evenly;
   align-items: center;
   flex-direction: row;
-  border:1px solid gray
+  gap: 30px;
+
 }
-img{
+#vs{
+  width: 100px;
+  height: 200px;
+}
+#player1{
+    width: 60px;
+    height: 60px;
+}
+#player2{
+  width: 60px;
+  height: 60px;
+}
+#umpire{
   width: 100px;
   height: 100px;
+  margin-top: -10px;
+
 }
 h1,h2{
   font-family: monospace;
+}
+.count{
+  width: 76px;
+  height: 80px;
+  margin-left: 1px;
+  background-color: black;
+}
+.displaycount{
+color:white;
+font-size:60px
 }

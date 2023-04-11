@@ -3,20 +3,23 @@ import "./game.css";
 function Game() {
   const Players = JSON.parse(sessionStorage.getItem("Players") || "{}");
   const [gameStatus, setgameStatus] = React.useState("visible");
+  const [resetbtn, managereset] = React.useState(false);
+  const [current, setnext] = React.useState(false);
+  let [count, userCount] = React.useState(0);
+  const [x, xstate]: any = React.useState([]);
+  const [y, ystate]: any = React.useState([]);
+  let [p1count, setcountp1] = React.useState(0);
+  let [p2count, setcountp2] = React.useState(0);
 
   let [winner, showwinner] = React.useState({
     player: "",
     color: "rgb(6, 158, 59)",
   });
-  const [current, setnext] = React.useState(false);
   const [currentPlayer, setPayer] = React.useState({
     name: "X",
     color: "rgb(6, 158, 59)",
   });
 
-  let [count, userCount] = React.useState(0);
-  const [x, xstate]: any = React.useState([]);
-  const [y, ystate]: any = React.useState([]);
   const winningcombo = [
     [0, 1, 2],
     [3, 4, 5],
@@ -38,11 +41,10 @@ function Game() {
     7: "",
     8: "",
     9: "",
-    active: true,
   });
 
   function handlebox(e: any) {
-    if (winner.player === "") {
+    if (winner.player === "" ) {
       if (!current) {
         let updated = { [e.target.id]: "X" };
         setBox((box) => ({
@@ -53,8 +55,8 @@ function Game() {
         setnext(true);
         let xArray = x.push(e.target.id);
         xstate((prev: any) => [...prev, xArray]);
-        e.currentTarget.disabled = box.active;
-        e.currentTarget.querySelector("h2").style.color = "rgb(6, 158, 59)";
+        e.currentTarget.style.color = "rgb(6, 158, 59)";
+        e.currentTarget.disabled = true;
         setPayer((prev) => ({
           ...prev,
           name: "O",
@@ -70,8 +72,8 @@ function Game() {
         setnext(false);
         let yArray = y.push(e.target.id);
         ystate((prev: any) => [...prev, yArray]);
-        e.currentTarget.disabled = box.active;
-        e.currentTarget.querySelector("h2").style.color = "rgb(248, 13, 111)";
+        e.currentTarget.style.color = "rgb(248, 13, 111)";
+        e.currentTarget.disabled = true;
         setPayer((prev) => ({
           ...prev,
           name: "  X",
@@ -92,26 +94,35 @@ function Game() {
       if (a === "" || b === "" || c === "") {
         continue;
       } else if (a === b && b === c) {
-        if (a === "X") {
+        if (a === "X" && winner.player === "") {
           showwinner({
             player: `${a} Wins!!`,
             color: "rgb(6, 158, 59)",
           });
           setgameStatus("hidden");
-        } else if (a === "O") {
+          let xcount = p1count + 1;
+          setcountp1(xcount);
+
+          return true;
+        } else if (a === "O" && winner.player === "") {
           showwinner({
             player: `${a} Wins!!`,
             color: "rgb(248, 13, 111)",
           });
           setgameStatus("hidden");
+          let ocount = p2count + 1;
+          setcountp2(ocount);
+          return true;
         }
-        return `${a} wins`;
-      } else if (count === 9 && winner.player === "") {
+        return true;
+      }
+       else if (count === 9 && winner.player === "" ) {
         showwinner({
           player: "Match Drawn",
           color: "yellow",
         });
-        return `Match drawn`;
+        setgameStatus("hidden");
+        continue;
       }
     }
   }
@@ -120,23 +131,24 @@ function Game() {
     method();
   });
   React.useEffect(() => {
-    if(box.active===false){
-      console.log(box);
-      let elems=document.getElementsByTagName('button')
-      for(let i = 0; i < elems.length; i++){
+    if (resetbtn) {
+      let elems = document.getElementsByTagName("button");
+      for (let i = 0; i < elems.length; i++) {
         elems[i].disabled = false;
+      }
+      managereset(false);
     }
-
-    }
-  });
+  }, [resetbtn]);
   const reset = (e: any) => {
-    showwinner(({
-      player:"",
-      color:""
-    }))
+    showwinner({
+      player: "",
+      color: "",
+    });
+    managereset(true);
+    userCount(0);
+
     setBox((prev) => ({
       ...prev,
-      active: false,
       1: "",
       2: "",
       3: "",
@@ -147,20 +159,39 @@ function Game() {
       8: "",
       9: "",
     }));
-    showwinner(({
-      player:"",
-      color:""
-    }))
+    setgameStatus("visible");
   };
   return (
     <div className="main-outer">
       <div className="players dccr">
-        <div className="player1">
-          <h1 style={{ color: "white" }}>{Players.player1}</h1>
+        <div className="player1-info main">
+          <div className="player1 dccr">
+            <img src={require("./x.png")} alt="" id="player1" />
+            <h1 style={{ color: "white" }}>
+              {Players.player1.toLocaleUpperCase()}
+            </h1>
+          </div>
+          <div className="umpire main2">
+            <div className="count dccr">
+              <h1 className="displaycount">{p1count}</h1>
+            </div>
+            <img src={require("./umpire.png")} alt="" id="umpire"/>
+          </div>
         </div>
-        <img src={require("./vs.png")} alt="" />
-        <div className="player1">
-          <h1 style={{ color: "white" }}>{Players.player2}</h1>
+        <img src={require("./vs.png")} alt="" id="vs" />
+        <div className="player2-info main">
+          <div className="player2 dccr">
+            <img src={require("./o.png")} alt="" id="player2" />
+            <h1 style={{ color: "white" }}>
+              {Players.player2.toLocaleUpperCase()}
+            </h1>
+          </div>
+          <div className="umpire main2">
+            <div className="count dccr">
+              <h1 className="displaycount">{p2count}</h1>
+            </div>
+            <img src={require("./umpire.png")} alt="" id="umpire"/>
+          </div>
         </div>
       </div>
       <div className="content">
@@ -181,7 +212,7 @@ function Game() {
               key={1}
               onClick={(e) => handlebox(e)}
             >
-              <h2> {box[1]}</h2>
+              {box[1]}
             </button>
             <button
               className="box"
@@ -189,7 +220,7 @@ function Game() {
               key={2}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[4]}</h2>
+              {box[4]}
             </button>
             <button
               className="box"
@@ -197,7 +228,7 @@ function Game() {
               key={3}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[7]}</h2>
+              {box[7]}
             </button>
           </div>
           <div className="main">
@@ -207,7 +238,7 @@ function Game() {
               key={3}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[2]}</h2>
+              {box[2]}
             </button>
             <button
               className="box"
@@ -215,7 +246,7 @@ function Game() {
               key={4}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[5]}</h2>
+              {box[5]}
             </button>
             <button
               className="box"
@@ -223,7 +254,7 @@ function Game() {
               key={5}
               onClick={(e) => handlebox(e)}
             >
-              <h2> {box[8]}</h2>
+              {box[8]}
             </button>
           </div>
           <div className="main">
@@ -233,7 +264,7 @@ function Game() {
               key={6}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[3]}</h2>
+              {box[3]}
             </button>
             <button
               className="box"
@@ -241,7 +272,7 @@ function Game() {
               key={7}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[6]}</h2>
+              {box[6]}
             </button>
             <button
               className="box"
@@ -249,14 +280,17 @@ function Game() {
               key={8}
               onClick={(e) => handlebox(e)}
             >
-              <h2>{box[9]}</h2>
+              {box[9]}
             </button>
           </div>
         </div>
         <div className="winner dcc">
           <h1 style={{ color: `${winner.color}` }}>{winner.player}</h1>
           <button id="reset" onClick={(e) => reset(e)}>
-            <h2>Re-Match</h2>
+            <h2>ReMatch</h2>
+          </button>
+          <button id="reset" onClick={(e) => reset(e)}>
+            <h2>Quit Game</h2>
           </button>
         </div>
       </div>
