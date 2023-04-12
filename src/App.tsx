@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Game from './components/gamebox/game';
 import User from './components/user/user';
-
 class App extends Component {
   
   render() {
