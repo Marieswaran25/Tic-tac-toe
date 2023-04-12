@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { LoaderFunction, useNavigate } from "react-router-dom";
 import "./game.css";
 function Game() {
   const navigate = useNavigate();
@@ -46,7 +46,6 @@ function Game() {
     8: "",
     9: "",
   });
-
   function handlebox(e: any) {
     if (winner.player === "") {
       if (!current) {
@@ -168,32 +167,39 @@ function Game() {
     setgameStatus("visible");
   };
   return (
-      <div className="main-outer">
-       <center>
-       <div className="border" style={{"height":"auto"}}>
-     <div className="border dccr">
-     <div className="player1">
-              <div className="player1info dccr">
-                <img src={require("./x.png")} alt="" id="player1" />
-                <h4>{Players.player1.toLocaleUpperCase()}</h4>
-              </div>
-              <center>
-                <h1>{p1count}</h1>
-              </center>
-            </div>
-            <img src={require('./vs.png')} alt="" id="vs"/>
-            <div className="player2">
-              <div className="player2info dccr">
-                <img src={require("./o.png")} alt="" id="player2" />
-                <h4>{Players.player2.toLocaleUpperCase()}</h4>
-              </div>
-              <center>
-                <h1>{p2count}</h1>
-              </center>
-            </div>
-     </div>
-          </div>
-       </center>
+      <div className="register">
+   <div className="players border dccr">
+    <div className="player1  dcc">
+      <div className="player1 dccr">
+        <img src={require('./x.png')} id="player1" alt="" />
+        <h1>{Players.player1}</h1>
+      </div>
+      <div>
+       <div className="dcc">
+       <div className="scorebox dccr">
+          <h1 className="text-light">{p1count}</h1>
+        </div>
+        <img src={require('./umpire.png')} alt="" id="umpire"/>
+      </div>
+       </div>
+    </div>
+<img src={require('./vs.png')} alt="" id="vs"/>
+    <div className="player2  dcc">
+    <div className="player2 dccr">
+        <img src={require('./o.png')} id="player2" alt="" />
+        <h1>{Players.player2}</h1>
+      </div>
+      <div>
+       <div className="dcc">
+       <div className="scorebox dccr">
+          <h1 className="text-light">{p2count}</h1>
+        </div>
+        <img src={require('./umpire.png')} alt="" id="umpire"/>
+      </div>
+       </div>
+    </div>
+
+   </div>
         <div className="content" style={{ width: "100%" }}>
           <div className="dcc">
             <h1 className={`${gameStatus}`}>
@@ -285,7 +291,7 @@ function Game() {
             </div>
           </div>
           <div className="winner dcc">
-            <h1 style={{ color: `${winner.color}` }}>{winner.player}</h1>
+            <h1 style={{ color: `${winner.color}` }} className="mt-3">{winner.player}</h1>
             <div className="dccr mt-2">
             <Button id="reset" onClick={(e) => reset(e)} className="bg-success">
               Play Again

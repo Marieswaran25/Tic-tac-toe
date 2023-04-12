@@ -7,6 +7,8 @@
   font-size: xx-large;
   border-radius: 20px;
   background-color: #dedbdb;
+  font-family: 'Lexend Peta', sans-serif;
+
   /* box-shadow: 5px 5px 6px rgba(48, 47, 47, 0.761); */
   border: none;
 }
@@ -27,7 +29,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 3vh;
+  margin-top: 6vh;
 }
 #reset {
   width: 150px;
@@ -56,13 +58,30 @@
 .hidden {
   visibility: hidden;
 }
-.dccr {
+.dccb {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
+  position: static;
+  /* gap: 20px; */
+
+}
+.dccr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: static;
   gap: 20px;
 
+}
+.dcc1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 100px;
 }
 #vs{
   width: 100px;
@@ -84,7 +103,6 @@
 }
 h1,h2,h4{
   font-family: 'Lexend Peta', sans-serif;
-  font-size: smaller;
 }
 .count{
   width: 76px;
@@ -100,3 +118,19 @@ font-size:60px
   border: 1px solid gray;
   border-radius: 30px;
 }
+.players{
+  height:300px
+}
+.scorebox{
+  width: 77px;
+  height: 80px;
+  background-color: black;
+}
+/* .player1{
+  width: 50%;
+  float:left
+}
+.player2{
+  width: 50%;
+  float:right
+} */

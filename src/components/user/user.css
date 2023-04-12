@@ -1,18 +1,7 @@
 .register{
     height: 100vh;
 }
-.dcc {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap:30px;
-}
-.dccr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
 
 /*
 .mt-35 {
