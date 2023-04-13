@@ -13,12 +13,15 @@ function handle(e:React.ChangeEvent<any>){
     setPlayers({...players,[e.currentTarget.id]:e.currentTarget.value});
     setError('');
 }
+console.log(players.player1.length)
+
 function entergame(e:FormEvent<HTMLButtonElement>){
+  console.log(players.player1.length)
     e.preventDefault();
     if (players.player1==='' ||players.player2==='' ){
       setError('*Please Enter the players name to play')
      }
-    else if(players.player1.length>=10||players.player2.length>=10){
+    else if(players.player1.length>=11||players.player2.length>=11){
       setError('*Name should Within Ten characters')
      }
    else{
