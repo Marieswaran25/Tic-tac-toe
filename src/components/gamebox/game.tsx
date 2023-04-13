@@ -1,6 +1,8 @@
+import { faCircleXmark, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button } from "react-bootstrap";
-import { LoaderFunction, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./game.css";
 function Game() {
   const navigate = useNavigate();
@@ -17,11 +19,11 @@ function Game() {
 
   let [winner, showwinner] = React.useState({
     player: "",
-    color: "rgb(6, 158, 59)",
+    color: "#f5615a",
   });
   const [currentPlayer, setPayer] = React.useState({
     name: "X",
-    color: "rgb(6, 158, 59)",
+    color: "#f5615a",
   });
 
   const winningcombo = [
@@ -58,12 +60,12 @@ function Game() {
         setnext(true);
         let xArray = x.push(e.target.id);
         xstate((prev: any) => [...prev, xArray]);
-        e.currentTarget.style.color = "rgb(6, 158, 59)";
+        e.currentTarget.style.color = "#f5615a";
         e.currentTarget.disabled = true;
         setPayer((prev) => ({
           ...prev,
           name: "O",
-          color: "rgb(248, 13, 111)",
+          color: "#3cc3f3",
         }));
       } else {
         let updated = { [e.target.id]: "O" };
@@ -75,18 +77,18 @@ function Game() {
         setnext(false);
         let yArray = y.push(e.target.id);
         ystate((prev: any) => [...prev, yArray]);
-        e.currentTarget.style.color = "rgb(248, 13, 111)";
+        e.currentTarget.style.color = "#3cc3f3";
         e.currentTarget.disabled = true;
         setPayer((prev) => ({
           ...prev,
           name: "  X",
-          color: "rgb(6, 158, 59)",
+          color: "#f5615a",
         }));
       }
     }
   }
-  function quit(){
-    navigate('/');
+  function quit() {
+    navigate("/");
   }
 
   function method() {
@@ -102,8 +104,8 @@ function Game() {
       } else if (a === b && b === c) {
         if (a === "X" && winner.player === "") {
           showwinner({
-            player: `${a} Wins!!`,
-            color: "rgb(6, 158, 59)",
+            player: `${a} won!!`,
+            color: "#f5615a",
           });
           setgameStatus("hidden");
           let xcount = p1count + 1;
@@ -112,8 +114,8 @@ function Game() {
           return true;
         } else if (a === "O" && winner.player === "") {
           showwinner({
-            player: `${a} Wins!!`,
-            color: "rgb(248, 13, 111)",
+            player: `${a} won!!`,
+            color: "#3cc3f3",
           });
           setgameStatus("hidden");
           let ocount = p2count + 1;
@@ -167,142 +169,142 @@ function Game() {
     setgameStatus("visible");
   };
   return (
-      <div className="register">
-   <div className="players border dccr">
-    <div className="player1  dcc">
-      <div className="player1 dccr">
-        <img src={require('./x.png')} id="player1" alt="" />
-        <h1>{Players.player1}</h1>
-      </div>
-      <div>
-       <div className="dcc">
-       <div className="scorebox dccr">
+    <div className="register bg-dark">
+      <div className="players border1 dccr">
+        <div className="player1  dcc">
+          <div className="player1 dccr">
+            <img src={require("./x.png")} id="player1" alt="" />
+            <p className="text-light"> {Players.player1}</p>
+          </div>
+
           <h1 className="text-light">{p1count}</h1>
         </div>
-        <img src={require('./umpire.png')} alt="" id="umpire"/>
-      </div>
-       </div>
-    </div>
-<img src={require('./vs.png')} alt="" id="vs"/>
-    <div className="player2  dcc">
-    <div className="player2 dccr">
-        <img src={require('./o.png')} id="player2" alt="" />
-        <h1>{Players.player2}</h1>
-      </div>
-      <div>
-       <div className="dcc">
-       <div className="scorebox dccr">
+        <div
+          className="bg-danger"
+          style={{ height: "60%", width: "2px" }}
+        ></div>
+        <div className="player2  dcc">
+          <div className="player2 dccr">
+            <img src={require("./o.png")} id="player2" alt="" />
+            <p className="text-light">{Players.player2}</p>
+          </div>
+
           <h1 className="text-light">{p2count}</h1>
         </div>
-        <img src={require('./umpire.png')} alt="" id="umpire"/>
       </div>
-       </div>
-    </div>
-
-   </div>
-        <div className="content" style={{ width: "100%" }}>
-          <div className="dcc">
-            <h1 className={`${gameStatus}`}>
-              Player-
-              <span style={{ color: `${currentPlayer.color}` }}>
-                {currentPlayer.name}
-              </span>
-              's play
-            </h1>
+      <div className="content mt-2" style={{ width: "100%" }}>
+        <div className="dcc">
+          <h1 className={`${gameStatus} text-light`}>
+            Player-
+            <span style={{ color: `${currentPlayer.color}` }}>
+              {currentPlayer.name}
+            </span>
+            's play
+          </h1>
+        </div>
+        <div className="outer mt-2">
+          <div className="main">
+            <button
+              className="box"
+              id="1"
+              key={1}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[1]}
+            </button>
+            <button
+              className="box"
+              id="4"
+              key={2}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[4]}
+            </button>
+            <button
+              className="box"
+              id="7"
+              key={3}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[7]}
+            </button>
           </div>
-          <div className="outer">
-            <div className="main">
-              <button
-                className="box"
-                id="1"
-                key={1}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[1]}
-              </button>
-              <button
-                className="box"
-                id="4"
-                key={2}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[4]}
-              </button>
-              <button
-                className="box"
-                id="7"
-                key={3}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[7]}
-              </button>
-            </div>
-            <div className="main">
-              <button
-                className="box"
-                id="2"
-                key={3}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[2]}
-              </button>
-              <button
-                className="box"
-                id="5"
-                key={4}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[5]}
-              </button>
-              <button
-                className="box"
-                id="8"
-                key={5}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[8]}
-              </button>
-            </div>
-            <div className="main">
-              <button
-                className="box"
-                id="3"
-                key={6}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[3]}
-              </button>
-              <button
-                className="box"
-                id="6"
-                key={7}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[6]}
-              </button>
-              <button
-                className="box"
-                id="9"
-                key={8}
-                onClick={(e) => handlebox(e)}
-              >
-                {box[9]}
-              </button>
-            </div>
+          <div className="main">
+            <button
+              className="box"
+              id="2"
+              key={3}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[2]}
+            </button>
+            <button
+              className="box"
+              id="5"
+              key={4}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[5]}
+            </button>
+            <button
+              className="box"
+              id="8"
+              key={5}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[8]}
+            </button>
           </div>
-          <div className="winner dcc">
-            <h1 style={{ color: `${winner.color}` }} className="mt-3">{winner.player}</h1>
-            <div className="dccr mt-2">
-            <Button id="reset" onClick={(e) => reset(e)} className="bg-success">
-              Play Again
+          <div className="main">
+            <button
+              className="box"
+              id="3"
+              key={6}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[3]}
+            </button>
+            <button
+              className="box"
+              id="6"
+              key={7}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[6]}
+            </button>
+            <button
+              className="box"
+              id="9"
+              key={8}
+              onClick={(e) => handlebox(e)}
+            >
+              {box[9]}
+            </button>
+          </div>
+        </div>
+        <div className="winner dcc">
+          <h1 style={{ color: `${winner.color}` }} className="mt-2">
+            {winner.player}
+          </h1>
+          <div className="dccr mt-2">
+            <Button
+              id="reset"
+              onClick={(e) => reset(e)}
+              className="bg-success text-light"
+            >
+              Play Again <FontAwesomeIcon icon={faPlay} />
             </Button>
-            <Button id="reset" onClick={(e) => quit()} className="bg-warning">
-              Quit Game
+            <Button
+              id="reset"
+              onClick={(e) => quit()}
+              className="bg-warning text-dark"
+            >
+              Quit Game <FontAwesomeIcon icon={faCircleXmark} />
             </Button>
-            </div>
           </div>
         </div>
       </div>
+    </div>
   );
 }
 export default Game;
