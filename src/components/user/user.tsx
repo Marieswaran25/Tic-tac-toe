@@ -24,7 +24,7 @@ function entergame(e:FormEvent<HTMLButtonElement>){
     if (players.player1==='' ||players.player2==='' ){
       setError('*Please Enter the players name to play')
      }
-    else if(players.player1.length>=8||players.player2.length>=8){
+    else if(players.player1.length>=12||players.player2.length>=12){
       setError('*Name should Within Eight characters')
      }
    else{
@@ -37,7 +37,7 @@ function entergame(e:FormEvent<HTMLButtonElement>){
 
   return (
   <div className="register bg-dark dccx" style={{"height":"100vh"}}>
-    <img src="./logo.png" alt="" style={{"width":"100px","height":"100px"}}/>
+    <img src={require('./logo.png')} alt="" style={{"width":"100px","height":"100px"}}/>
     <div className="dccr">
     <Card bg={"bg-dark"} style={{"border":"none"}}>
               <Form className='bg-dark text-light' style={{"border":"none"}}>
