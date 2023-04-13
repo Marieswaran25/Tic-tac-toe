@@ -1,45 +1,37 @@
+import React, { FormEvent } from 'react'
 import { faCloudBolt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { FormEvent } from 'react'
 import { Button, Card, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 export default function User() {
     const navigate = useNavigate();
-const [error ,setError]=React.useState('')
-
-    const [players,setPlayers]=React.useState({
-        player1:'',
-        player2:''
-
-    });
-
+    const [error ,setError]=React.useState('')
+    const [players,setPlayers]=React.useState({player1:'',player2:''});
 function handle(e:React.ChangeEvent<any>){
     e.preventDefault();
-    setPlayers({...players,[e.currentTarget.id]:e.currentTarget.value})
-    setError('')
+    setPlayers({...players,[e.currentTarget.id]:e.currentTarget.value});
+    setError('');
 }
 function entergame(e:FormEvent<HTMLButtonElement>){
     e.preventDefault();
     if (players.player1==='' ||players.player2==='' ){
       setError('*Please Enter the players name to play')
      }
-    else if(players.player1.length>=12||players.player2.length>=12){
-      setError('*Name should Within Eight characters')
+    else if(players.player1.length>=10||players.player2.length>=10){
+      setError('*Name should Within Ten characters')
      }
    else{
-    e.preventDefault()
-    sessionStorage.setItem('Players',JSON.stringify(players))
-    navigate('/Tic-tac-toe/play')
+    e.preventDefault();
+    sessionStorage.setItem('Players',JSON.stringify(players));
+    navigate('/Tic-tac-toe/play');
    }
 }
-
-
-  return (
+return (
   <div className="register bg-dark dccx" style={{"height":"100vh"}}>
     <img src={require('./logo.png')} alt="" style={{"width":"100px","height":"100px"}}/>
     <div className="dccr">
-    <Card bg={"bg-dark"} style={{"border":"none"}}>
+      <Card bg={"bg-dark"} style={{"border":"none"}}>
               <Form className='bg-dark text-light' style={{"border":"none"}}>
                 <Form.Group className="mb-4">
                   <Form.Label >Enter the Player 1</Form.Label>
@@ -54,8 +46,8 @@ function entergame(e:FormEvent<HTMLButtonElement>){
                 <Form.Text className='text-danger'>{error}</Form.Text>
                 </center>
               </Form>
-            </Card>
+        </Card>
     </div>
-   </div>
-  )
+  </div>
+  );
 }

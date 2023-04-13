@@ -1,8 +1,9 @@
 {
-  "homepage": "https://marieswaran25.github.io/Tic-tac-toe/",
+  "homepage": "https://marieswaran25.github.io/Tic-tac-toe/#",
   "name": "tictactoe",
   "version": "0.1.0",
   "private": true,
+  "author": "Marieswaran",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
